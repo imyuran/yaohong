@@ -1,0 +1,176 @@
+# ansible yml
+# 2019年11月28日
+- hosts: '{{hosts}}'
+  tasks:
+############################# LPVipthink 开发环境 init and restart
+   - name: stop lp-core
+     tags: LPVipthink-dev
+     #remote_user: klzz
+     script: scripts/lp-stop.sh
+     args:
+       chdir: /data/wwwroot/shd-lp.vipthink.cn/lpvipthink/
+   - name: start lp-core
+     tags: LPVipthink-dev
+     script: scripts/lp-restart.sh
+     args:
+       chdir: /data/wwwroot/shd-lp.vipthink.cn/lpvipthink/
+
+############################## LPVipthink 测试环境 init and restart
+   - name: stop lp-core
+     #remote_user: shop
+     tags: LPVipthink-test
+     script: scripts/lp-stop.sh
+     args:
+       chdir: /data/wwwroot/sht-lp.vipthink.cn/lpvipthink/
+
+   - name: stop lp-core
+     #remote_user: shop
+     tags: LPVipthink-test
+     script: scripts/lp-restart.sh
+     args:
+       chdir: /data/wwwroot/sht-lp.vipthink.cn/lpvipthink/
+############################## LPVipthink pre环境 init and restart
+   - name: stop lp-core
+     tags: LPVipthink-shp
+     script: scripts/lp-stop.sh
+     args:
+       chdir: /data/wwwroot/shp-lp.vipthink.cn/lpvipthink/
+
+   - name: stop lp-core
+     tags: LPVipthink-shp
+     script: scripts/lp-restart.sh
+     args:
+       chdir: /data/wwwroot/shp-lp.vipthink.cn/lpvipthink/
+
+############################# LPVipthink gr_灰度 init and restart
+   - name: stop lp-core
+     #remote_user: shop
+     tags: LPVipthink-gr
+     script: scripts/lp-stop.sh
+     args:
+       chdir: /data/wwwroot/sho-lp.vipthink.cn/lpvipthink/
+
+   - name: stop lp-core
+     #remote_user: shop
+     tags: LPVipthink-gr
+     script: scripts/lp-restart.sh
+     args:
+       chdir: /data/wwwroot/sho-lp.vipthink.cn/lpvipthink/
+
+############################# vipthink_core dev开发环境  restart
+   - name: stop cc-core
+     tags: vipthink_core-dev
+     script: scripts/core-stop.sh
+     args:
+       chdir: /data/wwwroot/shd-cc.vipthink.cn/vipthink_core
+
+   - name: start cc-core
+     tags: vipthink_core-dev
+     script: scripts/core-start.sh
+     args:
+       chdir: /data/wwwroot/shd-cc.vipthink.cn/vipthink_core
+
+############################## vipthink_core test 测试环境  restart
+   - name: stop cc-core
+     #remote_user: shop
+     tags: vipthink_core-test
+     script: scripts/core-stop.sh
+     args:
+       chdir: /data/wwwroot/sht-cc.vipthink.cn/vipthink_core
+
+   - name: start cc-core
+     tags: vipthink_core-test
+     script: scripts/core-start.sh
+     args:
+       chdir: /data/wwwroot/sht-cc.vipthink.cn/vipthink_core
+
+####################################vipthink_core  pre环境#####################
+   - name: stop cc-core
+     tags: vipthink_core-shp
+     script: scripts/core-stop.sh
+     args:
+       chdir: /data/wwwroot/shp-cc.vipthink.cn/vipthink_core
+
+   - name: start cc-core
+     tags: vipthink_core-shp
+     script: scripts/core-start.sh
+     args:
+       chdir: /data/wwwroot/shp-cc.vipthink.cn/vipthink_core
+
+############################## vipthink_core sho  restart
+   - name: stop cc-core
+     tags: vipthink_core-gr
+     script: scripts/core-stop.sh
+     args:
+       chdir: /data/wwwroot/sho-cc.vipthink.cn/vipthink_core
+
+   - name: start cc-core
+     tags: vipthink_core-gr
+     script: scripts/core-start.sh
+     args:
+       chdir: /data/wwwroot/sho-cc.vipthink.cn/vipthink_core
+
+############################## go_tars_core 开发环境 restart
+   - name: restart go_tars_core
+     #remote_user: shop
+     tags: go_tars_core_dev
+     script: scripts/go_tars_core_restart.sh
+     args:
+       chdir: /data/wwwroot/shd-cc.vipthink.cn/go_tars_core
+
+############################## go_tars_core 测试环境 restart
+   - name: restart go_tars_core
+     #remote_user: shop
+     tags: go_tars_core_test
+     script: scripts/go_tars_core_restart.sh
+     args:
+       chdir: /data/wwwroot/sht-cc.vipthink.cn/go_tars_core
+
+
+#####################  dev  lesson restart   ###############################
+
+
+   - name: stop lesson
+     tags: vipthink_lesson_dev
+     script: scripts/lesson_restart.sh
+     args:
+       chdir: /data/wwwroot/shd-cc.vipthink.cn/vipthink_lesson
+
+#####################  test  lesson restart   ###############################
+
+
+   - name: stop lesson
+     tags: vipthink_lesson_test
+     script: scripts/lesson_restart.sh
+     args:
+       chdir: /data/wwwroot/sht-cc.vipthink.cn/vipthink_lesson
+#####################  shp  lesson restart   ###############################
+
+
+   - name: stop lesson
+     tags: vipthink_lesson_shp
+     script: scripts/lesson_restart.sh
+     args:
+       chdir: /data/wwwroot/shp-cc.vipthink.cn/vipthink_lesson
+
+#####################  sho  lesson restart   ###############################
+
+
+   - name: stop lesson
+     tags: vipthink_lesson_sho
+     script: scripts/lesson_restart.sh
+     args:
+       chdir: /data/wwwroot/sho-cc.vipthink.cn/vipthink_lesson
+
+
+################################################################################
+
+   - name: "LPVipthink-test"
+     tags: LPVipthink-test_old
+     shell: "cd /data/wwwroot/lpvipthink && git reset --hard && git pull"
+
+   - name: Change the working directory to somedir/ before executing the command.
+     tags: op-test
+     shell: echo 123 > 56.log
+     args:
+       chdir: /home
