@@ -1,0 +1,422 @@
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 20s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:     # 可配置使用一些服务发现机制发现目标
+    - targets: ['localhost:9090']
+
+
+  - job_name: "crm"
+    static_configs:
+    - targets:
+      - "10.104.189.214:9100"
+      labels:
+        instance: 'www1'
+    - targets:
+      - "10.104.138.167:9100"
+      labels:
+        instance: 'www2'
+    - targets:
+      - "10.135.127.178:9100"
+      labels:
+        instance: '在线直播'
+
+
+  - job_name: "op"
+    static_configs:
+    - targets: ['10.104.159.56:9100']
+      labels:
+        instance: 'elk'
+    - targets: ['127.0.0.1:9100']
+      labels:
+        instance: 'op'
+    - targets: ['10.104.38.238:9100']
+      labels:
+        instance: 'op-test'
+
+
+  - job_name: "ngx-core"
+    static_configs:
+    - targets:
+      - "10.104.34.74:9100"
+      labels:
+        instance: 'ngxCore-1'
+    - targets:
+      - "10.104.28.211:9100"
+      labels:
+        instance: 'ngxCore-2'
+    - targets:
+      - "10.104.34.77:9100"
+      labels:
+        instance: 'ngxCore-3'
+
+
+  - job_name: "fz"
+    static_configs:
+    - targets:
+      - "10.104.37.241:9100"
+      labels:
+        instance: 'fz.vipthink.cn1'
+    - targets:
+      - "10.104.176.110:9100"
+      labels:
+        instance: 'fz.vipthink.cn2'
+    - targets:
+      - "10.104.169.210:9100"
+      labels:
+        instance: 'fz.vipthink.cn3'
+    - targets:
+      - "10.104.150.247:9100"
+      labels:
+        instance: 'fz.vipthink.cn4'
+    - targets:
+      - "10.104.44.63:9100"
+      labels:
+        instance: 'fz.vipthink.cn5-mq'
+    - targets:
+      - "10.104.164.235:9100"
+      labels:
+        instance: 'fz.vipthink.cn6-backup'
+    - targets:
+      - "10.104.22.44:9100"
+      labels:
+        instance: 'edu-fz-2.0'
+ 
+
+  - job_name: "app"
+    static_configs:
+    - targets: ['10.104.41.140:9100']
+      labels:
+        instance: "app1"
+    - targets: ['10.104.222.39:9100']
+      labels:
+        instance: "app2"
+    - targets: ['10.104.185.85:9100']
+      labels:
+        instance: "app3"
+    - targets: ['10.104.180.116:9100']
+      labels:
+        instance: "app4"
+
+  
+  - job_name: "redis"
+    static_configs:
+    - targets: ['10.104.150.60:9121']
+      labels:
+        instance: 业务处理专用
+    - targets: ['10.104.150.60:9122']
+      labels:
+        instance: 营销中心
+    - targets: ['10.104.150.60:9123']
+      labels:
+        instance: 文件缓存
+    - targets: ['10.104.150.60:9124']
+      labels:
+        instance: 共享session
+    - targets: ['10.104.150.60:9125']
+      labels:
+        instance: 录制服务
+    - targets: ['10.104.150.60:9126']
+      labels:
+        instance: 登录认证授权服专用
+
+
+  - job_name: "mysql"
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['10.104.150.60:9101']
+      labels:
+        instance: 主库
+    - targets: ['10.104.150.60:9102']
+      labels:
+        instance: cc-业务
+    - targets: ['10.104.150.60:9103']
+      labels:
+        instance: 数据中心
+    - targets: ['10.104.150.60:9104']
+      labels:
+        instance: 登录认证权限专用
+    - targets: ['10.104.150.60:9105']
+      labels:
+        instance: crm-1
+    - targets: ['10.104.150.60:9106']
+      labels:
+        instance: tars-db(上海)
+    - targets: ['10.104.150.60:9107']
+      labels:
+        instance: crm-2
+    - targets: ['10.104.150.60:9108']
+      labels:
+        instance: 灾备
+    - targets: ['10.104.150.60:9109']
+      labels:
+        instance: 排课系统
+
+
+  # 20190907 add by kk
+  - job_name: "rec-0830"
+    static_configs:
+    - targets:
+      - "10.104.133.28:9100"
+      - "10.104.148.166:9100"
+      - "10.104.16.141:9100"
+      - "10.104.34.237:9100"
+      - "10.104.14.14:9100"
+      - "10.104.44.61:9100"
+      - "10.104.165.216:9100"
+      - "10.104.52.186:9100"
+      - "10.104.41.63:9100"
+      - "10.104.35.45:9100"
+      labels:
+        group: 'rec-0830'
+
+
+  - job_name: "rec-1130"
+    static_configs:
+    - targets:
+      - "10.104.58.137:9100"
+      - "10.104.132.175:9100"
+      - "10.104.176.105:9100"
+      - "10.104.159.36:9100"
+      - "10.104.16.174:9100"
+      - "10.104.16.11:9100"
+      - "10.104.138.182:9100"
+      - "10.104.166.93:9100"
+      - "10.104.44.49:9100"
+      - "10.104.142.134:9100"
+      - "10.104.45.131:9100"
+      - "10.104.33.190:9100"
+      labels:
+        group: 'rec-1130'
+
+
+  - job_name: "rec-1630"
+    static_configs:
+    - targets:
+      - "10.104.160.52:9100"
+      - "10.104.57.180:9100"
+      - "10.104.169.145:9100"
+      - "10.104.36.237:9100"
+      - "10.104.154.160:9100"
+      - "10.104.133.240:9100"
+      - "10.104.135.75:9100"
+      - "10.104.38.221:9100"
+      - "10.104.25.176:9100"
+      - "10.104.1.81:9100"
+      - "10.104.8.44:9100"
+      - "10.104.137.63:9100"
+      - "10.104.40.6:9100"
+      - "10.104.17.167:9100"
+      - "10.104.3.244:9100"
+      - "10.104.35.145:9100"
+      - "10.104.56.60:9100"
+      - "10.104.10.201:9100"
+      - "10.104.13.71:9100"
+      - "10.104.140.250:9100"
+      labels: 
+        group: 'rec-1630'
+
+
+  - job_name: "others"
+    static_configs:
+    - targets:
+      - "10.104.172.205:9100"
+      labels:
+        instance: '外网测试服'
+    - targets:
+      - "10.104.39.255:9100"
+      labels:
+        instance: 'pre2'
+    - targets:
+      - "10.104.51.147:9100"
+      labels:
+        instance: 'test-2'
+    - targets:
+      - "10.104.16.21:9100"
+      labels:
+        instance: '数据库异地备份'
+    - targets:
+      - "10.104.41.169:9100"
+      labels:
+        instance: '撞单'
+    - targets:
+      - "10.104.156.184:9100"
+      labels:
+        instance: '少年派'
+    - targets:
+      - "10.104.177.129:9100"
+      labels:
+        instance: 'cs.vipthink.cn1'
+    - targets:
+      - "10.104.176.17:9100"
+      labels:
+        instance: 'cs.vipthink.cn2'
+    - targets:
+      - "10.104.198.144:9100"
+      labels:
+        instance: 'crontab'
+
+
+#jmx_exporter监控java应用运行情况
+  - job_name: "java"
+    static_configs:
+    - targets:
+      - "10.104.51.147:9200"
+      labels:
+        instance: 'dev2-workorder'
+
+
+#  #blackbox_exporter探测主机(ping)
+#  - job_name: 'node_status'
+#    metrics_path: /probe
+#    params:
+#      module: [icmp]
+#    static_configs:
+#      - targets: ['127.0.0.1']
+#        labels:
+#          instance: 'op-icmp'
+#          group: 'node'
+#    relabel_configs:
+#      - source_labels: [__address__]
+#        target_label: __param_target
+##      - source_labels: [__param_target]
+##        target_label: instance
+#      - target_label: __address__
+#        replacement: 127.0.0.1:9115     # The blackbox exporter's real hostname:port.
+
+
+  #blackbox_exporter监控端口
+  - job_name: 'port_status'
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    static_configs:
+#      - targets: ['127.0.0.1:9100']
+#        labels:
+#          instance: 'op-9100'
+#      - targets: ['10.104.172.205:9100']
+#        labels:
+#          instance: 'test-9100'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+#      - source_labels: [__param_target]
+#        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115     # The blackbox exporter's real hostname:port.
+
+
+  #blackbox_exporter监控web状态信息
+  - job_name: web_status
+    metrics_path: /probe
+    scrape_interval: 60s
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets: ['https://www.vipthink.cn']
+        labels:
+          instance: 'www.vipthink.cn'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 127.0.0.1:9115     # The blackbox exporter's real hostname:port.
+
+
+  #blackbox_exporter监控API接口信息(POST)
+  - job_name: 'online'
+    scrape_interval: 60s
+    metrics_path: /probe
+    params:
+      module: [http_post_2xx]
+    static_configs:
+      - targets:
+#        - https://www.vipthink.cn/api_admin.php/api/present_sign/signList HTTP/1.1
+#        - https://www.vipthink.cn/api_index.php/index/evaluation_center/getNeedTestCount HTTP/1.1
+#        - https://www.vipthink.cn/api_admin.php/api/student/LiveStudentList HTTP/1.1
+#        - https://www.vipthink.cn/api_index.php/index/my/course HTTP/1.1
+#        - https://www.vipthink.cn/api_admin.php/api/live/liveLists HTTP/1.1
+#        - https://www.vipthink.cn/api_admin.php/api/student/detail HTTP/1.1
+#        - https://www.vipthink.cn/api_index.php/index/my/notifySaveAttachmentNew HTTP/1.1
+#        - https://www.vipthink.cn/api_admin.php/api/userlist/follow HTTP/1.1
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115     # The blackbox exporter's real hostname:port.
+
+
+
+  - job_name: 'core'
+    scrape_interval: 10s
+    metrics_path: /probe
+    params:
+      module: [http_post_2xx]
+    static_configs:
+#      - targets:
+#        - https://edu.vipthink.cn
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115     # The blackbox exporter's real hostname:port.
+
+
+
+  #consul自动发现
+#  - job_name: consul
+#    metrics_path: /metrics
+#    scheme: http
+#    consul_sd_configs:
+#      - server: 127.0.0.1:8500
+#        scheme: http
+#        services:
+#          - crm
+#        tag_separator: ''
+#     
+#    relabel_configs:
+##    - source_labels: ['__meta_consul_tags']
+##      target_label: 'product'
+##    - source_labels: ['__meta_consul_dc']
+##      target_label: 'idc'
+#    - source_labels: ['__meta_consul_service']
+#      target_label: 'service'
+#    - source_labels: ['job']
+#      target_label: 'environment'
+#      regex:        '(.*)_discover'
+#      replacement:  '${1}'
+
+
+
+  #基于文件发现
+#  - job_name: 'mysql'
+#    file_sd_configs:
+#    - refresh_interval: 30s
+#      files:
+#      - /usr/local/prometheus/conf.d/mysql.yml

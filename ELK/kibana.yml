@@ -1,0 +1,7 @@
+server.port: 5601
+server.host: "0.0.0.0"
+elasticsearch.hosts: ["http://elk:9200", "http://elk2:9200", "http://elk3:9200"]
+elasticsearch.requestTimeout: 30000000
+elasticsearch.shardTimeout: 30000000
+elasticsearch.startupTimeout: 5000000
+i18n.locale: "zh-CN"
