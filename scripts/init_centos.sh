@@ -68,6 +68,13 @@ ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 #Set en  Centos7
 sed -i 's@LANG=.*$@LANG="en_US.UTF-8"@g' /etc/locale.conf
 
+# ip_conntrack table full dropping packets
+[ ! -e "/etc/sysconfig/modules/iptables.modules" ] && { echo -e "modprobe nf_conntrack\nmodprobe nf_conntrack_ipv4" > /etc/sysconfig/modules/iptables.modules; chmod +x /etc/sysconfig/modules/iptables.modules; }
+modprobe nf_conntrack
+modprobe nf_conntrack_ipv4
+echo options nf_conntrack hashsize=131072 > /etc/modprobe.d/nf_conntrack.conf
+
+
 #set sysctl.conf
 cat > /etc/sysctl.conf << EOF
 # es
@@ -103,6 +110,7 @@ net.netfilter.nf_conntrack_tcp_timeout_time_wait = 120
 net.netfilter.nf_conntrack_tcp_timeout_established = 3600
 EOF
 sysctl -p
+
 source /etc/profile
 
 # Update time
@@ -125,3 +133,4 @@ EOF
 if [ -e "$(which atop)" ]; then
   [ ! -e "/var/spool/cron/root" -o -z "$(grep 'atop_clean' /var/spool/cron/root)" ] && { echo "0 1 * * *  /data/tolol/atop_clean.sh > /dev/null 2>&1" >> /var/spool/cron/root;chmod 600 /var/spool/cron/root; }
 fi
+
