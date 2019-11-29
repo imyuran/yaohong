@@ -14,4 +14,4 @@ RUN yum -y install python-devel  python-pip
 # Ppgrade pip
 RUN pip install --upgrade pip
 
-# docker build -t yaohong/python-ssh  .
+# docker build -t yaohong/python-test  .
