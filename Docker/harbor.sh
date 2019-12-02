@@ -58,3 +58,4 @@ $ docker push sh-hb.vipthink.cn/myapp/myapp:v1
 #案例2
 docker tag centos:7.4.1708  sh-hb.vipthink.cn/myapp/centos:7.4.1708
 docker push sh-hb.vipthink.cn/myapp/centos:7.4.1708
+
