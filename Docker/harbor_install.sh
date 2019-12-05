@@ -36,17 +36,15 @@ docker-compose up -d
 admin/Harbor12345
 
 # 进入harbor
-docker login sh-hb.vipthink.cn
+docker login sh-ha.vipthink.cn
 Username: admin
 Password: 
 Login Succeeded
 
-# 案例1
+# habor 打tag 推送镜像到harbor
+docker tag yaohong/app-api:v1  sh-ha.vipthink.cn/yaohong/app-api:v1
+docker push  sh-ha.vipthink.cn/yaohong/app-api:v1
 
-$ docker tag yaohong/app:v1 sh-hb.vipthink.cn/myapp/myapp:v1
-$ docker push sh-hb.vipthink.cn/myapp/myapp:v1
-
-#案例2
-docker tag centos:7.4.1708  sh-hb.vipthink.cn/myapp/centos:7.4.1708
-docker push sh-hb.vipthink.cn/myapp/centos:7.4.1708
-
+# habor 打tag 推送镜像到harbor
+docker tag yaohong/app-api:v1  sh-ha.vipthink.cn/app-api:v1 
+docker push  sh-ha.vipthink.cn/yaohong/app-api:v1

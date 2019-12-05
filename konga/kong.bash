@@ -1,17 +1,3 @@
-# 安装基础环境含
-yum install wget net-tools vim gcc gcc-c++ pcre-devel zlib-devel openssl-devel -y
-wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
-wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo   
-
-
-# 安装docker
-yum remove docker  docker-common docker-selinux docker-engine
-yum install -y yum-utils device-mapper-persistent-data lvm2
-yum-config-manager --add-repo  https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo
-yum install docker-ce
-systemctl start docker
-systemctl enable docker
-
 
 # 安装postgresql
 yum install -y https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-7-x86_64/pgdg-centos95-9.5-3.noarch.rpm
@@ -22,13 +8,26 @@ systemctl enable postgresql-9.5.service
 systemctl start postgresql-9.5.service
 systemctl status postgresql-9.5.service
 
+######################################################################################################################################################
+yum install https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-6-x86_64/pgdg-centos96-9.6-3.noarch.rpm -y
+yum install postgresql96 -y
+yum install postgresql96-server -y
+/usr/pgsql-9.6/bin/postgresql96-setup initdb
+systemctl enable postgresql-9.6
+systemctl start postgresql-9.6
+
+######################################################################################################################################################
+# 添加用户和数据
+sudo -s -u postgres
+psql
+CREATE USER kong WITH PASSWORD '123456';
+CREATE DATABASE kong OWNER kong;
+GRANT ALL PRIVILEGES ON DATABASE kong to kong;
 
 # 执行完初始化任务之后，postgresql 会自动创建和生成两个用户和一个数据库：
-
-	linux 系统用户 postgres：管理数据库的系统用户
-	postgresql 用户 postgres：数据库超级管理员
-	数据库 postgres：用户 postgres 的默认数据库
-
+linux 系统用户 postgres：管理数据库的系统用户
+postgresql 用户 postgres：数据库超级管理员
+数据库 postgres：用户 postgres 的默认数据库
 
 # 新建 linux kong 用户 
 sudo adduser kong
@@ -45,29 +44,26 @@ psql
 \password postgres        #Aa111111...
 
 # 建立新的数据库用户（和之前建立的系统用户要重名）
-create user kong with password 'Aa111111...';
-
-create user konga_database with password 'Aa111111...';
+create user kong with password '123456'
+create user konga_database with password '123456'
 
 # 为新用户建立数据库
 create database konga_database owner konga_database;
-
-create database konga_database owner konga_database;
+create database kong owner kong;
 
 # 把新建的数据库权限赋予 kong
-grant all privileges on database kong to kong;
-grant all privileges on database konga_database to konga_database;
+grant all privileges on database kong to kong
+grant all privileges on database konga_database to konga_database
 
 # 退出控制台
 \q
 
-/var/lib/pgsql/9.5/data/pg_hba.conf #默认  psql 不能登录
+#默认  psql 不能登录
+/var/lib/pgsql/9.5/data/pg_hba.conf 
 vi /var/lib/pgsql/9.5/data/postgresql.conf 
-
 
 # 重启数据库
 systemctl restart postgresql-9.5.service
-
 
 # 安装kong
 wget https://bintray.com/kong/kong-rpm/rpm -O bintray-kong-kong-rpm.repo
@@ -93,6 +89,7 @@ pg_user = kong
 pg_password =  kong 
 pg_database = kong       
 
+./kong migrations bootstrap -c /etc/kong/kong.conf
 
 kong migrations bootstrap [-c /path/to/kong.conf]
 
