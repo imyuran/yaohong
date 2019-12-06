@@ -1,6 +1,7 @@
  cat >>/etc/docker/daemon.json <<-'EOF'
 {
 "registry-mirrors": ["https://i80iz2o3.mirror.aliyuncs.com"]
+"hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]
 }
 EOF
 

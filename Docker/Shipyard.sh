@@ -1,4 +1,4 @@
-# Shipyard -- Docker可视化管理工具安装与配置
+# Shipyard -- Docker可视化管理工具安装与配置   作者已停止更新
 
 # Shipyard使用到的数据库，用于数据存储
 docker pull docker.io/rethinkdb
