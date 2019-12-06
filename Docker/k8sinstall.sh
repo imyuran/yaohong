@@ -1,5 +1,4 @@
- cat >>/etc/docker/daemon.json <<-'EOF'
-{
-"registry-mirrors": ["https://i80iz2o3.mirror.aliyuncs.com"]
-}
-EOF
+
+
+# 调度框架，K8S、Mesos、Swarm 
+K8S、Mesos、Swarm 一个都不能少 

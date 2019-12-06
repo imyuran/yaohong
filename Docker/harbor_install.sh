@@ -42,9 +42,8 @@ Password:
 Login Succeeded
 
 # habor 打tag 推送镜像到harbor
-docker tag yaohong/app-api:v1  sh-ha.vipthink.cn/yaohong/app-api:v1
+docker tag  yaohong/app-api:v1  sh-ha.vipthink.cn/yaohong/app-api:test
 docker push  sh-ha.vipthink.cn/yaohong/app-api:v1
-
-# habor 打tag 推送镜像到harbor
-docker tag yaohong/app-api:v1  sh-ha.vipthink.cn/app-api:v1 
-docker push  sh-ha.vipthink.cn/yaohong/app-api:v1
+# habor 打tag 推送镜像
+docker tag  centos:7.4.1708  sh-ha.vipthink.cn/system/centos:7.4.1708
+docker push sh-ha.vipthink.cn/system/centos:7.4.1708

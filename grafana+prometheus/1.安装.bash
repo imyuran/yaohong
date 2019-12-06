@@ -25,7 +25,7 @@ EOF
 chmod +x restart.sh
 # 启动
 ./restart.sh
-# 可以远程热加载配置文件，无需重启prometheus
+# 可以远程热加载配置文件，无需重启prometheus  --web.enable-lifecycle
 curl -X POST http://localhost:9090/-/reload  
 
 
